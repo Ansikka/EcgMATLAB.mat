@@ -1,0 +1,14 @@
+% Load signal
+load('ecg_signal_001.mat');  % Should contain 'signal' variable
+
+% Calculate LHOM features
+mean_val = mean(signal);
+var_val  = var(signal);
+skew_val = skewness(signal);
+kurt_val = kurtosis(signal);
+
+% Print values
+fprintf('Mean     : %.4f\n', mean_val);
+fprintf('Variance : %.4f\n', var_val);
+fprintf('Skewness : %.4f\n', skew_val);
+fprintf('Kurtosis : %.4f\n', kurt_val);
