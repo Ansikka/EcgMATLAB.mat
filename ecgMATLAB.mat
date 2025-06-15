@@ -1,14 +1,29 @@
-% Load signal
-load('ecg_signal_001.mat');  % Should contain 'signal' variable
+% --- Load the signal (make sure this .mat file is in your folder) ---
+load('ecg_signal_001.mat');  % This loads variable 'signal'
+Fs = 500;                    % Sampling frequency
+duration = length(signal)/Fs;
+t = linspace(0, duration, length(signal));
 
-% Calculate LHOM features
-mean_val = mean(signal);
-var_val  = var(signal);
-skew_val = skewness(signal);
-kurt_val = kurtosis(signal);
+% --- Plot the ECG signal ---
+figure;
+plot(t, signal, 'b');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Synthetic ECG Signal #1');
+grid on;
 
-% Print values
-fprintf('Mean     : %.4f\n', mean_val);
-fprintf('Variance : %.4f\n', var_val);
-fprintf('Skewness : %.4f\n', skew_val);
-fprintf('Kurtosis : %.4f\n', kurt_val);
+% --- Calculate Central Moments from 4th to 50th ---
+signal_centered = signal - mean(signal);
+moments = zeros(1, 47);  % 47 moments from 4 to 50
+
+for k = 4:50
+    moments(k - 3) = mean(signal_centered.^k);
+end
+
+% --- Plot Higher Order Moments ---
+figure;
+stem(4:50, moments, 'filled', 'MarkerSize', 3);
+xlabel('Moment Order (k)');
+ylabel('Central Moment of Order k');
+title('Higher Order Moments (4th to 50th) of ECG Signal');
+grid on;
