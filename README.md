@@ -120,8 +120,5 @@ Publish a research paper comparing LHOM with time–frequency domain techniques.
 
 🙏 Acknowledgements
 Indian Institute of Technology (IIT) Patna for research mentorship and resources.
-
-PhysioNet for providing open-access ECG datasets.
-
 Special thanks to Somnath Sarangi sir for constant guidance.
 
