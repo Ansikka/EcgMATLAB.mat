@@ -60,7 +60,7 @@ This project introduces the use of **Logarithmic Higher Order Moments (LHOM)** f
 
 Clone the repository:
 
-git clone https://github.com/your-username/lhom-ecg-feature-extraction.git
+git clone https://github.com/Ansikka/lhom-ecg-feature-extraction.git
 cd lhom-ecg-feature-extraction
 
 Install dependencies
