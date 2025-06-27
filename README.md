@@ -118,7 +118,7 @@ Integrate deep learning models (1D-CNNs) for end-to-end diagnosis.
 
 Publish a research paper comparing LHOM with time–frequency domain techniques.
 
-🙏 Acknowledgements
+ Acknowledgements
 Indian Institute of Technology (IIT) Patna for research mentorship and resources.
 Special thanks to Somnath Sarangi sir for constant guidance.
 
