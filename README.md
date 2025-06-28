@@ -1,10 +1,10 @@
-# 🩺 LHOM-Based Feature Extraction on ECG Signals
+#  LHOM-Based Feature Extraction on ECG Signals
 
 A research-driven project focused on applying **Logarithmic Higher Order Moments (LHOM)** to extract meaningful features from **ECG (Electrocardiogram) signals**, 
 improving the accuracy and interpretability of biomedical signal classification models.
  This project is a part of my research internship at **IIT Patna**, under the Biomedical Signal Processing domain.
 > 
-## 📌 Table of Contents
+##  Table of Contents
 
 - [Introduction](#introduction)
 - [Motivation](#motivation)
@@ -19,19 +19,19 @@ improving the accuracy and interpretability of biomedical signal classification 
 - [Acknowledgements](#acknowledgements)
 
 
-## 🧠 Introduction
+##  Introduction
 
 Electrocardiogram (ECG) signals are one of the most critical sources of information in diagnosing cardiac diseases. 
 This project introduces the use of **Logarithmic Higher Order Moments (LHOM)** for extracting subtle features from ECG signals that are often missed by traditional linear methods.
 
 
-## 🎯 Motivation
+##  Motivation
 
 - Traditional feature extraction (FFT, Wavelets) lacks sensitivity to **non-linear** and **non-Gaussian** components.
 - LHOM offers a new perspective for analyzing the **skewness, kurtosis, and non-stationarity** of ECG data.
 - The goal is to improve classification performance in detecting anomalies such as **arrhythmias**.
 
-## ⚙️ Methodology
+##  Methodology
 
 1. **Data Acquisition**  
    - Used datasets from **MIT-BIH Arrhythmia Database** via PhysioNet.
@@ -56,7 +56,7 @@ This project introduces the use of **Logarithmic Higher Order Moments (LHOM)** f
    - ROC-AUC and confusion matrix analysis
 
 
-## 💻 Installation
+##  Installation
 
 Clone the repository:
 
@@ -67,7 +67,7 @@ Install dependencies
 
 Edit
 pip install -r requirements.txt
-🚀 Usage
+ Usage
 To run the feature extraction pipeline:
 
 bash
@@ -93,13 +93,13 @@ Enhanced detection of minor arrhythmic patterns and QRS anomalies.
 
 Demonstrated robustness against noise and signal drift.
 
-🔍 Comparative Analysis
+ Comparative Analysis
 Method	Accuracy	Sensitivity	Specificity
 DWT + SVM	90.2%	88.1%	91.5%
 FFT + Random Forest	92.7%	91.0%	93.3%
 LHOM + CNN	97.6%	96.4%	98.1%
 
-🧰 Tech Stack
+ Tech Stack
 Python
 NumPy, SciPy, Pandas
 scikit-learn, Matplotlib, Seaborn
