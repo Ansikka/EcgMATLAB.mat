@@ -1,0 +1,39 @@
+clc; clear; close all;
+
+%% Step 1: Load two signals
+% Replace with actual signals or synthetic ones
+load('ecg_normal1.mat');    % should load variable 'signal'
+signal_normal = signal;
+
+load('ecg_disease1.mat');   % should load variable 'signal'
+signal_disease = signal;
+
+%% Step 2: Center the signals
+sig_norm = signal_normal - mean(signal_normal);
+sig_norm = sig_norm / std(sig_norm);  % normalize
+
+sig_dis = signal_disease - mean(signal_disease);
+sig_dis = sig_dis / std(sig_dis);     % normalize
+
+%% Step 3: Compute LHOM (3rd to 100th)
+moments_norm = zeros(1, 98);   % 100 - 3 + 1 = 98
+moments_dis  = zeros(1, 98);
+
+for k = 3:100
+    moments_norm(k-2) = mean(sig_norm.^k);
+    moments_dis(k-2)  = mean(sig_dis.^k);
+end
+
+%% Step 4: Apply log10 transformation
+log_moments_norm = log10(abs(moments_norm) + eps);
+log_moments_dis  = log10(abs(moments_dis) + eps);
+
+%% Step 5: Plot LHOM Comparison
+figure;
+plot(3:100, log_moments_norm, '-bo', 'LineWidth', 1.5); hold on;
+plot(3:100, log_moments_dis,  '-ro', 'LineWidth', 1.5);
+xlabel('Order of Moment (k)');
+ylabel('log_{10}(Central Moment)');
+legend('Normal ECG', 'Diseased ECG');
+title('LHOM Comparison: Normal vs Diseased ECG (3rd to 100th)');
+grid on;
