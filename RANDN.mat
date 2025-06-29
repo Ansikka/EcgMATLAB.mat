@@ -1,0 +1,24 @@
+%% Step 1: Generate random signal
+signal = randn(1, 10000);  % Gaussian white noise
+
+%% Step 2: Center and normalize
+signal = signal - mean(signal);
+signal = signal / std(signal);
+
+%% Step 3: Compute LHOM (1st to 100th order)
+moments = zeros(1, 100);
+
+for k = 1:100
+    moments(k) = mean(signal.^k);
+end
+
+%% Step 4: Apply log10 transformation
+log_moments = log10(abs(moments) + eps);
+
+%% Step 5: Plot LHOM
+figure;
+plot(1:100, log_moments, '-ko', 'LineWidth', 1.5);
+xlabel('Order of Moment (k)');
+ylabel('log_{10}(Central Moment)');
+title('LHOM of Gaussian Random Signal (randn)');
+grid on;
