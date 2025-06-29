@@ -1,24 +1,46 @@
-%% Step 1: Generate random signal
-signal = randn(1, 10000);  % Gaussian white noise
+clc; clear; close all;
 
-%% Step 2: Center and normalize
-signal = signal - mean(signal);
-signal = signal / std(signal);
+%% --- Step 1: Generate the signals ---
+n = 10000;
+x_rand  = rand(1, n);               % Uniform [0,1]
+x_randn = randn(1, n);              % Normal (mean 0, std 1)
 
-%% Step 3: Compute LHOM (1st to 100th order)
-moments = zeros(1, 100);
+% Synthetic ECG-like signal
+fs = 500;
+t = linspace(0, 10, fs*10);         % 10 sec signal
+ecg = sin(2*pi*1.2*t) + 0.25*sin(2*pi*10*t) + 0.1*randn(size(t));
 
-for k = 1:100
-    moments(k) = mean(signal.^k);
+%% --- Step 2: Normalize and center ---
+normalize = @(x) (x - mean(x)) / std(x);
+x_rand  = normalize(x_rand);
+x_randn = normalize(x_randn);
+ecg     = normalize(ecg);
+
+%% --- Step 3: LHOM Calculation (1st to 100th order) ---
+max_order = 100;
+moments_rand = zeros(1, max_order);
+moments_randn = zeros(1, max_order);
+moments_ecg = zeros(1, max_order);
+
+for k = 1:max_order
+    moments_rand(k)  = mean(x_rand.^k);
+    moments_randn(k) = mean(x_randn.^k);
+    moments_ecg(k)   = mean(ecg.^k);
 end
 
-%% Step 4: Apply log10 transformation
-log_moments = log10(abs(moments) + eps);
+%% --- Step 4: Apply log10 transform ---
+log_moments_rand  = log10(abs(moments_rand)  + eps);
+log_moments_randn = log10(abs(moments_randn) + eps);
+log_moments_ecg   = log10(abs(moments_ecg)   + eps);
 
-%% Step 5: Plot LHOM
+%% --- Step 5: Plot Comparison ---
 figure;
-plot(1:100, log_moments, '-ko', 'LineWidth', 1.5);
+plot(1:max_order, log_moments_rand,  '-g', 'LineWidth', 1.5); hold on;
+plot(1:max_order, log_moments_randn, '-b', 'LineWidth', 1.5);
+plot(1:max_order, log_moments_ecg,   '-r', 'LineWidth', 1.5);
+
 xlabel('Order of Moment (k)');
 ylabel('log_{10}(Central Moment)');
-title('LHOM of Gaussian Random Signal (randn)');
+title('LHOM Comparison: rand vs randn vs ECG');
+legend('Uniform rand', 'Gaussian randn', 'Synthetic ECG');
 grid on;
