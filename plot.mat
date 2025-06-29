@@ -1,92 +1,39 @@
-% Generate and save synthetic ECG signals
-for i = 1:5
-    % Normal ECG: Clean sinusoidal + light noise
-    signal = sin(2*pi*1*(0:0.001:1)) + 0.05*randn(1,1001);
-    save(sprintf('ecg_normal%d.mat', i), 'signal');
+clc; clear; close all;
+
+%% Step 1: Load ECG signals
+load('ecg_normal1.mat');    % loads variable 'signal'
+signal_normal = signal;
+
+load('ecg_disease1.mat');   % loads variable 'signal'
+signal_disease = signal;
+
+%% Step 2: Center and normalize
+sig_norm = signal_normal - mean(signal_normal);
+sig_norm = sig_norm / std(sig_norm);
+
+sig_dis = signal_disease - mean(signal_disease);
+sig_dis = sig_dis / std(sig_dis);
+
+%% Step 3: Compute LHOM (1st to 100th order)
+moments_norm = zeros(1, 100);
+moments_dis  = zeros(1, 100);
+
+for k = 1:100
+    moments_norm(k) = mean(sig_norm.^k);
+    moments_dis(k)  = mean(sig_dis.^k);
 end
 
-for i = 1:5
-    % Diseased ECG: Noisy + distorted
-    signal = sin(2*pi*1*(0:0.001:1)) + 0.4*randn(1,1001);
-    signal = signal + 0.2*sin(2*pi*10*(0:0.001:1));
-    save(sprintf('ecg_disease%d.mat', i), 'signal');
-end
-% File list and labels
-files = [ ...
-    "ecg_normal1.mat", "ecg_normal2.mat", "ecg_normal3.mat", ...
-    "ecg_normal4.mat", "ecg_normal5.mat", ...
-    "ecg_disease1.mat", "ecg_disease2.mat", "ecg_disease3.mat", ...
-    "ecg_disease4.mat", "ecg_disease5.mat"];
+%% Step 4: Apply log10 transformation
+log_moments_norm = log10(abs(moments_norm) + eps);
+log_moments_dis  = log10(abs(moments_dis) + eps);
 
-labels = [ ...
-    "Normal", "Normal", "Normal", "Normal", "Normal", ...
-    "Diseased", "Diseased", "Diseased", "Diseased", "Diseased"];
-
-% Initialize
-features = zeros(length(files), 8);  % 8 LHOM values
-
-% Extract LHOM
-for i = 1:length(files)
-    data = load(files{i});
-    signal = data.signal;
-
-    % Normalize
-    signal = signal - mean(signal);
-    signal = signal / std(signal);
-
-    % LHOMs: log of higher-order moments (3 to 10)
-    for n = 3:10
-        moment_val = mean(signal.^n);
-        features(i, n-2) = log(abs(moment_val) + eps);  % avoid log(0)
-    end
-end
-
-% Table
-labels = categorical(labels(:));  % ensure column format
-T = array2table(features, 'VariableNames', strcat("LHOM_", string(3:10)));
-T.Label = labels;
-% Train-Test Split
-cv = cvpartition(T.Label, 'HoldOut', 0.3);
-trainData = T(training(cv), :);
-testData  = T(test(cv), :);
-
-% Model: Random Forest (Bagged Trees)
-mdl = fitcensemble(trainData(:,1:end-1), trainData.Label, ...
-    'Method', 'Bag', 'NumLearningCycles', 100);
-
-% Predict
-predicted = predict(mdl, testData(:,1:end-1));
-accuracy = mean(predicted == testData.Label);
-fprintf("Accuracy: %.2f%%\n", accuracy*100);
-% LHOM scatter plot: Order 3 vs 4
+%% Step 5: Plot LHOM from 1 to 100
 figure;
-gscatter(features(:,1), features(:,2), labels, 'rb', 'ox', 10);
-xlabel('LHOM Order 3');
-ylabel('LHOM Order 4');
-title('Log-Higher-Order Moment Feature Scatter');
-legend('Normal', 'Diseased');
-
-% Confusion Matrix
-figure;
-confusionchart(testData.Label, predicted);
-title('Classification Confusion Matrix');
-skews = zeros(length(files), 1);
-kurts = zeros(length(files), 1);
-
-for i = 1:length(files)
-    signal = load(files{i}).signal;
-    signal = signal - mean(signal);
-    signal = signal / std(signal);
-    skews(i) = skewness(signal);
-    kurts(i) = kurtosis(signal);
-end
-
-% Plot
-figure;
-subplot(1,2,1);
-bar(skews); title('Skewness of ECG Signals');
-xlabel('Signal Index'); ylabel('Skewness');
-
-subplot(1,2,2);
-bar(kurts); title('Kurtosis of ECG Signals');
-xlabel('Signal Index'); ylabel('Kurtosis');
+plot(1:100, log_moments_norm, '-bo', 'LineWidth', 1.5); hold on;
+plot(1:100, log_moments_dis,  '-ro', 'LineWidth', 1.5);
+xlabel('Order of Moment (k)');
+ylabel('log_{10}(Central Moment)');
+legend('Normal ECG', 'Diseased ECG');
+title('LHOM Comparison: Normal vs Diseased ECG (1st to 100th)');
+axis tight;
+grid on;
