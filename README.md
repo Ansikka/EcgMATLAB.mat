@@ -1,124 +1,92 @@
-#  LHOM-Based Feature Extraction on ECG Signals
+# LHOM-Based ECG Signal Classification
 
-A research-driven project focused on applying **Logarithmic Higher Order Moments (LHOM)** to extract meaningful features from **ECG (Electrocardiogram) signals**, 
-improving the accuracy and interpretability of biomedical signal classification models.
- This project is a part of my research internship at **IIT Patna**, under the Biomedical Signal Processing domain.
-> 
-##  Table of Contents
-
-- [Introduction](#introduction)
-- [Motivation](#motivation)
-- [Methodology](#methodology)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Comparative Analysis](#comparative-analysis)
-- [Tech Stack](#tech-stack)
-- [Dataset](#dataset)
-- [Future Work](#future-work)
-- [Acknowledgements](#acknowledgements)
+This project focuses on classifying ECG signals (Normal vs Diseased) using **Local Higher Order Moments (LHOM)** as statistical features. It combines **signal processing**, **feature engineering**, and **machine learning (SVM, KNN, Random Forest)** in MATLAB.
 
 
-##  Introduction
 
-Electrocardiogram (ECG) signals are one of the most critical sources of information in diagnosing cardiac diseases. 
-This project introduces the use of **Logarithmic Higher Order Moments (LHOM)** for extracting subtle features from ECG signals that are often missed by traditional linear methods.
+## Project Objectives
 
-
-##  Motivation
-
-- Traditional feature extraction (FFT, Wavelets) lacks sensitivity to **non-linear** and **non-Gaussian** components.
-- LHOM offers a new perspective for analyzing the **skewness, kurtosis, and non-stationarity** of ECG data.
-- The goal is to improve classification performance in detecting anomalies such as **arrhythmias**.
-
-##  Methodology
-
-1. **Data Acquisition**  
-   - Used datasets from **MIT-BIH Arrhythmia Database** via PhysioNet.
-
-2. **Preprocessing**  
-   - Bandpass filtering (0.5–40 Hz)
-   - Baseline drift removal
-   - Noise filtering using median filters
-
-3. **LHOM Feature Extraction**  
-   - Implemented algorithms to compute:
-     - Higher-order central moments
-     - Logarithmic scale-based transformations
-     - Entropy, skewness, and kurtosis
-
-4. **Feature Selection & Classification**  
-   - Dimensionality reduction (PCA)
-   - Model training using SVM, Random Forest, and CNN
-
-5. **Evaluation**  
-   - Accuracy, Precision, Recall, F1-score
-   - ROC-AUC and confusion matrix analysis
+- Simulate or load ECG signals (normal & diseased)
+- Extract Local Higher Order Moments (up to 100th order)
+- Normalize and log-transform moment features
+- Save features to CSV for analysis
+- Train ML models (SVM, KNN, Random Forest)
+- Analyze performance and overfitting behavior
 
 
-##  Installation
+##  Folder Structure
+📂 lhom-ecg-classification/
+├── ecg_normal1.mat # Sample normal ECG signal
+├── ecg_disease1.mat # Sample diseased ECG signal
+├── extract_lhom_features.m # Main script for feature extraction
+├── lhom_features_10000.csv # Saved 10000 samples with LHOM features and labels
+├── classify_models.m # SVM, KNN, Random Forest classifiers
+├── overfitting_plot.m # Overfitting detection and plotting
+└── README.md # Project documentation
 
-Clone the repository:
 
-https://github.com/Ansikka/EcgMATLAB.mat
-cd lhom-ecg-feature-extraction
+---
 
-Install dependencies
+## ⚙️ Features Implemented
 
-Edit
-pip install -r requirements.txt
- Usage
-To run the feature extraction pipeline:
+### ✅ 1. ECG Signal Preprocessing
+- Loading `.mat` files of ECG signals
+- Signal repetition to generate 5000 samples/class (10,000 total)
+- Z-score normalization of each segment
 
-bash
-Copy
-Edit
-python lhom_extraction.py
-To train the classifier:
+### ✅ 2. LHOM Feature Extraction
+- Moments computed from 1st to 100th order
+- Logarithmic transformation using `log10(abs(moment) + eps)`
+- Separate LHOM profile for normal vs diseased ECG
 
-bash
-Copy
-Edit
-python train_model.py
-To visualize results:
+### ✅ 3. CSV Export
+- 100 LHOM features per sample
+- Final dataset: `10000 x 101` (last column = label)
+- Saved as `lhom_features_10000.csv`
 
-bash
-Copy
-Edit
-python plot_features.py
-📊 Results
-Improved classification accuracy up to 97.6% using LHOM-based features compared to ~90% using standard DWT features.
+### ✅ 4. Machine Learning Classification
+- **SVM** with RBF kernel  
+- **KNN** with k = 5  
+- **Random Forest** with 100 trees  
+- Train-test split (70/30)
+- Accuracy and confusion matrix for each
 
-Enhanced detection of minor arrhythmic patterns and QRS anomalies.
+### ✅ 5. Overfitting Visualization
+- Varying training sizes: 10% to 90%
+- Accuracy plots: Train vs Test
+- Helps detect overfitting behavior for all models
 
-Demonstrated robustness against noise and signal drift.
+## 📊 Sample Output
+SVM Accuracy : 96.20%
+KNN Accuracy : 94.85%
+Random Forest Acc : 97.40%
 
- Comparative Analysis
-Method	Accuracy	Sensitivity	Specificity
-DWT + SVM	90.2%	88.1%	91.5%
-FFT + Random Forest	92.7%	91.0%	93.3%
-LHOM + CNN	97.6%	96.4%	98.1%
 
- Tech Stack
-Python
-NumPy, SciPy, Pandas
-scikit-learn, Matplotlib, Seaborn
-TensorFlow/Keras for deep learning classification
-WFDB Toolkit for ECG data processing
+### 📈 Overfitting Plot
+- SVM, KNN, and RF accuracies shown against increasing train sizes
+- Helps evaluate model robustness and generalization
 
-📂 Dataset
-MIT-BIH Arrhythmia Dataset
 
-Publicly available and widely used in cardiac diagnosis research.
+## 🛠️ Requirements
 
-🔮 Future Work
-Extend LHOM analysis to other biomedical signals (EEG, EMG).
+- MATLAB R2021a or later
+- Signal Processing Toolbox (optional but helpful)
 
-Integrate deep learning models (1D-CNNs) for end-to-end diagnosis.
+## 🚀 Future Scope
 
-Publish a research paper comparing LHOM with time–frequency domain techniques.
+- Apply PCA or t-SNE on LHOM features for visualization
+- Use raw ECG input with CNN or RNN models for temporal classification
+- Extend dataset with real ECG samples (e.g., MIT-BIH)
+- Explore hybrid feature sets: LHOM + Wavelet + Entropy
 
- Acknowledgements
-Indian Institute of Technology (IIT) Patna for research mentorship and resources.
-Special thanks to Somnath Sarangi sir for constant guidance.
+## 📌 Citation
+If this project helped you, please consider citing it or starring the repository ⭐.
+
+##  Developed by
+
+**Anshika Sharma**  
+B.Tech Biomedical Engineering  
+Passionate about AI in Healthcare ❤️‍🩹
+
+
 
