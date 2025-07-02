@@ -27,66 +27,66 @@ This project focuses on classifying ECG signals (Normal vs Diseased) using **Loc
 
 ---
 
-## ⚙️ Features Implemented
+##  Features Implemented
 
-### ✅ 1. ECG Signal Preprocessing
+###  1. ECG Signal Preprocessing
 - Loading `.mat` files of ECG signals
 - Signal repetition to generate 5000 samples/class (10,000 total)
 - Z-score normalization of each segment
 
-### ✅ 2. LHOM Feature Extraction
+###  2. LHOM Feature Extraction
 - Moments computed from 1st to 100th order
 - Logarithmic transformation using `log10(abs(moment) + eps)`
 - Separate LHOM profile for normal vs diseased ECG
 
-### ✅ 3. CSV Export
+###  3. CSV Export
 - 100 LHOM features per sample
 - Final dataset: `10000 x 101` (last column = label)
 - Saved as `lhom_features_10000.csv`
 
-### ✅ 4. Machine Learning Classification
+###  4. Machine Learning Classification
 - **SVM** with RBF kernel  
 - **KNN** with k = 5  
 - **Random Forest** with 100 trees  
 - Train-test split (70/30)
 - Accuracy and confusion matrix for each
 
-### ✅ 5. Overfitting Visualization
+###  5. Overfitting Visualization
 - Varying training sizes: 10% to 90%
 - Accuracy plots: Train vs Test
 - Helps detect overfitting behavior for all models
 
-## 📊 Sample Output
+##  Sample Output
 SVM Accuracy : 96.20%
 KNN Accuracy : 94.85%
 Random Forest Acc : 97.40%
 
 
-### 📈 Overfitting Plot
+###  Overfitting Plot
 - SVM, KNN, and RF accuracies shown against increasing train sizes
 - Helps evaluate model robustness and generalization
 
 
-## 🛠️ Requirements
+##  Requirements
 
 - MATLAB R2021a or later
 - Signal Processing Toolbox (optional but helpful)
 
-## 🚀 Future Scope
+##  Future Scope
 
 - Apply PCA or t-SNE on LHOM features for visualization
 - Use raw ECG input with CNN or RNN models for temporal classification
 - Extend dataset with real ECG samples (e.g., MIT-BIH)
 - Explore hybrid feature sets: LHOM + Wavelet + Entropy
 
-## 📌 Citation
+##  Citation
 If this project helped you, please consider citing it or starring the repository ⭐.
 
 ##  Developed by
 
 **Anshika Sharma**  
 B.Tech Biomedical Engineering  
-Passionate about AI in Healthcare ❤️‍🩹
+Passionate about AI in Healthcare 
 
 
 
