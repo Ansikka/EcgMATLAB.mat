@@ -81,12 +81,3 @@ Random Forest Acc : 97.40%
 
 ##  Citation
 If this project helped you, please consider citing it or starring the repository ⭐.
-
-##  Developed by
-
-**Anshika Sharma**  
-B.Tech Biomedical Engineering  
-Passionate about AI in Healthcare 
-
-
-
