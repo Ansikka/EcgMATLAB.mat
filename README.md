@@ -56,28 +56,28 @@ This project focuses on classifying ECG signals (Normal vs Diseased) using **Loc
 - Accuracy plots: Train vs Test
 - Helps detect overfitting behavior for all models
 
-##  Sample Output
+##  6. Sample Output
 SVM Accuracy : 96.20%
 KNN Accuracy : 94.85%
 Random Forest Acc : 97.40%
 
 
-###  Overfitting Plot
+###  7. Overfitting Plot
 - SVM, KNN, and RF accuracies shown against increasing train sizes
 - Helps evaluate model robustness and generalization
 
 
-##  Requirements
+##  8. Requirements
 
 - MATLAB R2021a or later
 - Signal Processing Toolbox (optional but helpful)
 
-##  Future Scope
+##  9. Future Scope
 
 - Apply PCA or t-SNE on LHOM features for visualization
 - Use raw ECG input with CNN or RNN models for temporal classification
 - Extend dataset with real ECG samples (e.g., MIT-BIH)
 - Explore hybrid feature sets: LHOM + Wavelet + Entropy
 
-##  Citation
+##  10. Citation
 If this project helped you, please consider citing it or starring the repository ⭐.
