@@ -1,6 +1,6 @@
 # LHOM-Based ECG Signal Classification
-
-This project focuses on classifying ECG signals (Normal vs Diseased) using **Local Higher Order Moments (LHOM)** as statistical features. It combines **signal processing**, **feature engineering**, and **machine learning (SVM, KNN, Random Forest)** in MATLAB.
+This project focuses on classifying ECG signals (Normal vs Diseased) using **Local Higher Order Moments (LHOM)** as statistical features. 
+It combines **signal processing**, **feature engineering**, and **machine learning (SVM, KNN, Random Forest)** in MATLAB.
 
 ## Project Objectives
 - Simulate or load ECG signals (normal & diseased)
