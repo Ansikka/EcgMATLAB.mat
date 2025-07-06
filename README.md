@@ -14,11 +14,17 @@ It combines **signal processing**, **feature engineering**, and **machine learni
 lhom-ecg-classification
 
 ├──    ecg_normal1.mat # Sample normal ECG signal
+
 ├──    ecg_disease1.mat # Sample diseased ECG signal
+
 ├──    extract_lhom_features.m # Main script for feature extraction
+
 ├──    lhom_features_10000.csv # Saved 10000 samples with LHOM features and labels
+
 ├──    classify_models.m # SVM, KNN, Random Forest classifiers
+
 ├──    overfitting_plot.m # Overfitting detection and plotting
+
 └──    README.md # Project documentation
 
 ##  Features Implemented
