@@ -27,7 +27,7 @@ lhom-ecg-classification
 
 └──    README.md # Project documentation
 
-##  Features Implemented
+##  Features Implemented:
 
 ###  1. ECG Signal Preprocessing
 - Loading `.mat` files of ECG signals
