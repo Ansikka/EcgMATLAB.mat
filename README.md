@@ -11,7 +11,7 @@ It combines **signal processing**, **feature engineering**, and **machine learni
 - Analyze performance and overfitting behavior
 
 ##  Folder Structure
-lhom-ecg-classification
+LHOM-ecg-classification
 
 ├──    ecg_normal1.mat # Sample normal ECG signal
 
